@@ -1,2 +1,3 @@
-﻿  CSTEest.cpp
-  CSTEest.vcxproj -> E:\Github\CSTEest\Debug\CSTEest.exe
+﻿  Util.cpp
+D:\1102\Github\CSTEest\Util.cpp(17,2): warning C4091: “static ”: 没有声明变量时忽略“Util”的左侧
+  CSTEest.vcxproj -> D:\1102\Github\CSTEest\Debug\CSTEest.exe

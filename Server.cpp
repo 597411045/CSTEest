@@ -3,6 +3,9 @@
 #define WIN32_LEAN_AND_MEAN
 #endif
 
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
+
+
 #include <Windows.h>
 #include <winsock2.h>
 #include <ws2tcpip.h>
@@ -14,6 +17,7 @@
 
 //server
 #define PORT "7727"
+#define IP "127.0.0.1"
 
 //recv send
 #define BUFLEN 512
@@ -39,6 +43,8 @@ int ServerClass::StartServer() {
 	hints.ai_protocol = IPPROTO_TCP;
 	hints.ai_flags = AI_PASSIVE;
 	iResult = getaddrinfo(NULL, PORT, &hints, &result);
+	sockaddr_in* tmpAddr_in = (struct sockaddr_in*)result->ai_addr;
+	printf("%s", inet_ntoa(tmpAddr_in->sin_addr));
 	if (iResult != 0) {
 		printf("getaddrinfo failed: %d\n", iResult);
 		WSACleanup();
@@ -89,6 +95,7 @@ int ServerClass::StartServer() {
 	//recv send
 
 	char recvbuf[BUFLEN];
+	const char* sendbuf = "Welcome to Socket";
 	int iSendResult;
 	int recvbuflen = BUFLEN;
 
@@ -97,7 +104,11 @@ int ServerClass::StartServer() {
 		iResult = recv(AcceptedSocket, recvbuf, recvbuflen, 0);
 		if (iResult > 0) {
 			printf("Bytes received: %d\n", iResult);
-			iSendResult = send(AcceptedSocket, recvbuf, 10, 0);
+			for (int i = 0; i < 20; i++) {
+				printf("%i ", recvbuf[i]);
+			}
+
+			iSendResult = send(AcceptedSocket, sendbuf, (int)strlen(sendbuf), 0);
 			if (iSendResult == SOCKET_ERROR) {
 				printf("send failed: %d\n", WSAGetLastError());
 				closesocket(AcceptedSocket);

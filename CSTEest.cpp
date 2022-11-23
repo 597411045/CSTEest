@@ -1,7 +1,8 @@
-#include "Server.h"
+#include "Client.h"
 
 int main() {
-	ServerClass a;
-	a.StartServer();
+
+	ClientClass a;
+	a.StartClient();
 	return 0;
 }
